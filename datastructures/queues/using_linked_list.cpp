@@ -6,9 +6,9 @@ template<typename U>
 class MyQueue {
 public:
   MyQueue() {
-    first = new Node<U>;
-    last = first;
-    size++;
+    // first = new Node<U>;
+    // last = first;
+    // size++;
   }
   MyQueue(U val) {
     first = new Node<U>(val);
@@ -27,8 +27,14 @@ public:
 
 
   void enqueue(U val) {
-    last->next = new Node<U>(val);
-    last = last->next;
+    if (size == 0) {
+      first = new Node<U>(val);
+      last = first;
+    }
+    else {
+      last->next = new Node<U>(val);
+      last = last->next;
+    }
     size++;
   }
   // void prepend(int val) {
@@ -39,6 +45,9 @@ public:
   // }
 
   void dequeue() {
+    if (size == 0) return;
+    if (first == last) last = nullptr;
+
     Node<U>* tmp = first;
     first = first->next;
     delete tmp;
@@ -51,6 +60,10 @@ public:
 
 
   void print() {
+    if (size == 0) {
+      std::cout << "[]" << std::endl;
+      return;
+    }
     Node<U>* curr = first;
 
     std::cout << "[";
@@ -69,7 +82,6 @@ private:
   class Node {
   public:
     Node() {
-      value = 0;
       next = nullptr;
     }
     Node(T val) {
@@ -81,13 +93,13 @@ private:
     Node<T>* next;
   };
 
-  Node<U>* first;
-  Node<U>* last;
+  Node<U>* first = nullptr;
+  Node<U>* last = nullptr;
   int size = 0;
 };
 
 int main() {
-  MyQueue<std::string> queue("Frank");
+  MyQueue<std::string> queue;
   queue.print();
 
   queue.enqueue("Julie");
@@ -97,6 +109,12 @@ int main() {
   queue.print();
 
   std::cout << queue.peek() << std::endl;
+
+  queue.enqueue("Sally");
+  queue.print();
+
+  queue.enqueue("Matt");
+  queue.print();
 
   queue.dequeue();
   queue.print();

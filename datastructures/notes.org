@@ -1,0 +1,13 @@
+#+TITLE Notes
+* Data structures
+** Trees
+*** BST
+This one has been the hardest so far tbh. It took me way too long to actually be able to create my insert function.
+It wasn't because the function was hard to write, that part took me about 10 minutes (still probably too long).
+It was the fact I was using a templated BST class. And when I tried to write my own BST print function, the template stuff was breaking everything
+I tried to overload the cout << operator, but that was a mistake.
+I then tried to just make some print functions (which had to also be templated), but that also didn't work out.
+I ended up just doing a non-templated BST class which made it easier. Probably don't really need templated class anyway
+[[file:trees/bst.cpp::class BinarySearchTree {][Here's]] the current version of the class
+
+Still need to create a [[file:trees/bst.cpp::~BinarySearchTree() {}][destructor]]

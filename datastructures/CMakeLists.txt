@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.13)
 
 project(ZTM_DATA_STRUCTURES)
+set(CMAKE_CXX_STANDARD 17)
 
-add_executable(llqueue queues/using_linked_list.cpp)
+add_executable(tree trees/bst.cpp)

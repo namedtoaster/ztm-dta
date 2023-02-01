@@ -57,7 +57,29 @@ public:
       }
     }
   }
-  void lookup(int val) {
+  bool lookup(int val) {
+    if (root == nullptr) {
+      return false;
+    }
+    Node* curr = root;
+    
+    while (curr != nullptr) {
+      if (val < curr->value) {
+	if (curr->left == nullptr) {
+	  return false;
+	}
+	curr = curr->left;
+      }
+      else if (val > curr->value) {
+	if (curr->right == nullptr) {
+	  return false;
+	}
+	curr = curr->right;
+      }
+      else return true;
+    }
+
+    return false;
   }
 
   const Node* getRoot() const {
@@ -108,5 +130,14 @@ int main() {
   bst.insert(15);
   bst.insert(1);
   printBST(bst);
+
+  std::cout << bst.lookup(9) << std::endl;
+  std::cout << bst.lookup(4) << std::endl;
+  std::cout << bst.lookup(6) << std::endl;
+  std::cout << bst.lookup(20) << std::endl;
+  std::cout << bst.lookup(8) << std::endl;
+  std::cout << bst.lookup(170) << std::endl;
+  std::cout << bst.lookup(15) << std::endl;
+  std::cout << bst.lookup(1) << std::endl;
   return 0;
 }

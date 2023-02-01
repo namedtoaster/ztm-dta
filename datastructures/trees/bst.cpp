@@ -65,15 +65,9 @@ public:
     
     while (curr != nullptr) {
       if (val < curr->value) {
-	if (curr->left == nullptr) {
-	  return false;
-	}
 	curr = curr->left;
       }
       else if (val > curr->value) {
-	if (curr->right == nullptr) {
-	  return false;
-	}
 	curr = curr->right;
       }
       else return true;

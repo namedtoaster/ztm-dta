@@ -57,9 +57,9 @@ public:
       }
     }
   }
-  bool lookup(int val) {
+  Node* lookup(int val) {
     if (root == nullptr) {
-      return false;
+      return nullptr;
     }
     Node* curr = root;
     
@@ -70,10 +70,97 @@ public:
       else if (val > curr->value) {
 	curr = curr->right;
       }
-      else return true;
+      else return curr;
     }
 
-    return false;
+    return nullptr;
+  }
+
+  void remove(int val) {
+    if (root == nullptr) return;
+
+    Node* curr = root;
+    Node* prnt = nullptr;
+
+    while (curr) {
+      if (val < curr->value) {
+	prnt = curr;
+	curr = prnt->left;
+      }
+      else if (val > curr->value) {
+	prnt = curr;
+	curr = prnt->right;
+      }
+      else {
+	// option 1, no right child
+	if (curr->right == nullptr) {
+	  if (prnt == nullptr) {
+	    root = curr->left;
+	  } else {
+	    // if parent > curr value, make curr left
+	    // a child of parent
+	    if (curr->value < prnt->value) {
+	      prnt->left = curr->left;
+	    }
+	    // if parent < curr value, make curr left
+	    // child of right child of parent
+	    else if (curr->value > prnt->value) {
+	      prnt->right = curr->left;
+	    }
+	  }
+	}
+	// option 2, right child but it doesn't
+	// have left child
+	else if (curr->right->left == nullptr) {
+	  if (prnt == nullptr) {
+	    root = curr->left;
+	  }
+	  else {
+	    curr->right->left = curr->left;
+
+	    // if parent > curr, make right child
+	    // left of the parent
+	    if (curr->value < prnt->value) {
+	      prnt->left = curr->right;
+	    }
+	    // if parent < curr, make right child
+	    // right of the parent
+	    else if (curr->value > prnt->value) {
+	      prnt->right = curr->right;
+	    }
+	  }
+	}
+	// option 3, right child that has
+	// a left child
+	else {
+	  // find the right child's left most child
+	  Node* leftmost = curr->right->left;
+	  Node* leftmostPrnt = curr->right;
+	  while (leftmost->left != nullptr) {
+	    leftmostPrnt = leftmost;
+	    leftmost = leftmostPrnt->left;
+	  }
+
+	  // parent's left subtree is now
+	  // leftmost's right subtree
+	  leftmostPrnt->left = leftmost->right;
+	  leftmost->left = curr->left;
+	  leftmost->right = curr->right;
+
+	  if (prnt == nullptr) {
+	    root = leftmost;
+	  }
+	  else {
+	    if (curr->value < prnt->value) {
+	      prnt->left = leftmost;
+	    } else if (curr->value > prnt->value) {
+	      prnt->right = leftmost;
+	    }
+	  }
+	}
+	return;
+      }
+    }
   }
 
   const Node* getRoot() const {
@@ -125,13 +212,8 @@ int main() {
   bst.insert(1);
   printBST(bst);
 
-  std::cout << bst.lookup(9) << std::endl;
-  std::cout << bst.lookup(4) << std::endl;
-  std::cout << bst.lookup(6) << std::endl;
-  std::cout << bst.lookup(20) << std::endl;
-  std::cout << bst.lookup(8) << std::endl;
-  std::cout << bst.lookup(170) << std::endl;
-  std::cout << bst.lookup(15) << std::endl;
-  std::cout << bst.lookup(1) << std::endl;
+  bst.remove(1);
+  printBST(bst);
+  
   return 0;
 }

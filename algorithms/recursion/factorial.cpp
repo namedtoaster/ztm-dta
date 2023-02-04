@@ -1,15 +1,11 @@
 #include <iostream>
 
+// 5 * (4 * (3 * 2))
 int findFactorialRecursive(int num) {
-  int ans;
   if (num == 2) {
     return num;
   }
-  else {
-    ans = num * findFactorialRecursive(num - 1);
-  }
-
-  return ans;
+  return (num * findFactorialRecursive(num - 1));
 }
 
 int findFactorialIterative(int num) {

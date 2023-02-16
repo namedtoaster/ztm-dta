@@ -24,7 +24,7 @@ int fibonacciIterative(int n) { // O(n)
   for (int i = 2; i <= n; i++) {
     arr.push_back(arr[i - 1] + arr[i - 2]);
   }
-  
+
   return arr[n];
 }
 
@@ -42,6 +42,6 @@ int main() {
   //std::cout << findFactorialIterative(5) << std::endl;
 
   std::cout << fibonacciRecursive(40) << std::endl;
-  
+
   std::cout << fibonacciIterative(40) << std::endl;
 }
